@@ -48,7 +48,7 @@ public class CqlTestSuite {
     // This test is for the various CQL operators
     @Test
     public void testMainSuite() throws IOException, JAXBException, UcumException {
-        Library library = translate("portable/CqlTestSuite.cql");
+        Library library = translate("portable/CqlIntervalSuite.cql");
         Context context = new Context(library, ZonedDateTime.of(2018, 1, 1, 7, 0, 0, 0, TimeZone.getDefault().toZoneId()));
         if (library.getStatements() != null) {
             for (ExpressionDef expression : library.getStatements().getDef()) {
