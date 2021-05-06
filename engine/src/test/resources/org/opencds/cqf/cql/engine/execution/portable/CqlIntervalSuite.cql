@@ -248,12 +248,12 @@ define test_Question2x:
 // Fails
 //  [main] WARN org.opencds.cqf.cql.engine.elm.execution.MessageEvaluator - Test Question3x failed: Expected  Found [1.0, 1.99999999], [2.0, 2.99999999], [3.0, 3.99999999], [4.0, 4.999                                                                                        99999]
 define test_Question3x:
-  TestMessage("Question3x" = List<Interval<Integer>>{Interval[1, 1], Interval[2, 2], Interval[3, 3], Interval[4, 4], Interval[5, 5]}, 'Question3x', toString(List<Interval<Integer>>{}), toString("Question3x"))
+  TestMessage("Question3x" = List<Interval<Decimal>>{Interval[1.0, 1.999999], Interval[2, 2], Interval[3, 3], Interval[4, 4], Interval[5, 5]}, 'Question3x', toString(List<Interval<Decimal>>{}), toString("Question3x"))
 
 // Fails
 // [main] WARN org.opencds.cqf.cql.engine.elm.execution.MessageEvaluator - Test Question3x2 failed: Expected  Found [1.0, 2.99999999], [3.0, 4.99999999]
 define test_Question3x2:
-  TestMessage("Question3x2" = List<Interval<Integer>>{Interval[1, 2], Interval[3, 4]}, 'Question3x2', toString(List<Interval<Integer>>{}), toString("Question3x2"))
+  TestMessage("Question3x2" = List<Interval<Decimal>>{Interval[1, 2], Interval[3, 4]}, 'Question3x2', toString(List<Interval<Decimal>>{Interval[1, 2], Interval[3, 4]}), toString("Question3x2"))
 
 // Fails
 // [main] WARN org.opencds.cqf.cql.engine.elm.execution.MessageEvaluator - Test Question4x failed: Expected  Found [1.0, 1.99999999], [2.0, 2.99999999], [3.0, 3.99999999], [4.0, 4.99999999]
@@ -279,7 +279,7 @@ define test_Question4x6:
 
 // failed
 define test_Question5x:
-  TestMessage("Question5x" = List<Interval<Integer>>{Interval[ 2,2], Interval[ 3,3], Interval[ 4,4], Interval[ 5,5]}, 'Questionx5', toString(List<Interval<Integer>>{}), toString("Question5x"))
+  TestMessage("Question5x" = List<Interval<Decimal>>{Interval[2,2], Interval[3,3], Interval[4,4], Interval[5,5]}, 'Questionx5', toString(List<Interval<Decimal>>{}), toString("Question5x"))
 
 // failed
 define test_Question5x2:
@@ -292,5 +292,25 @@ define test_Question5x3:
 define test_Question6x:
   TestMessage("Question6x" = List<Interval<Decimal>>{Interval[2,2], Interval[3,3], Interval[4,4]}, 'Question6x', toString(List<Interval<Decimal>>{}), toString("Question6x"))
 
+// failed
 define test_Question6x2:
   TestMessage("Question6x2" = List<Interval<Decimal>>{Interval[ 2,2.09999999], Interval[ 2.1,2.19999999], Interval[ 2.2,2.29999999], Interval[ 2.3,2.39999999], Interval[ 2.4,2.49999999], Interval[ 2.5,2.59999999], Interval[ 2.6,2.69999999], Interval[ 2.7,2.79999999], Interval[ 2.8,2.89999999], Interval[ 2.9,2.99999999], Interval[ 3,3.09999999], Interval[ 3.1,3.19999999], Interval[ 3.2,3.29999999], Interval[ 3.3,3.39999999], Interval[ 3.4,3.49999999], Interval[ 3.5,3.59999999], Interval[ 3.6,3.69999999], Interval[ 3.7,3.79999999], Interval[ 3.8,3.89999999], Interval[ 3.9,3.99999999], Interval[ 4,4.09999999], Interval[ 4.1,4.19999999], Interval[ 4.2,4.29999999], Interval[ 4.3,4.39999999], Interval[ 4.4,4.49999999], Interval[ 4.5,4.59999999], Interval[ 4.6,4.69999999], Interval[ 4.7,4.79999999], Interval[ 4.8,4.89999999], Interval[ 4.9,4.99999999]}, 'Question6x2', toString(List<Interval<Decimal>>{}), toString("Question6x2"))
+
+define test_Question6x4:
+  TestMessage("Question6x4" = List<Interval<Decimal>>{Interval[ 2,2.09999999], Interval[ 2.1,2.19999999], Interval[ 2.2,2.29999999], Interval[ 2.3,2.39999999], Interval[ 2.4,2.49999999], Interval[ 2.5,2.59999999], Interval[ 2.6,2.69999999], Interval[ 2.7,2.79999999], Interval[ 2.8,2.89999999], Interval[ 2.9,2.99999999], Interval[ 3,3.09999999], Interval[ 3.1,3.19999999], Interval[ 3.2,3.29999999], Interval[ 3.3,3.39999999], Interval[ 3.4,3.49999999], Interval[ 3.5,3.59999999], Interval[ 3.6,3.69999999], Interval[ 3.7,3.79999999], Interval[ 3.8,3.89999999], Interval[ 3.9,3.99999999]}, 'Question6x4', toString(List<Interval<Decimal>>{}), toString("Question6x4"))
+
+define test_Question6x5:
+  TestMessage("Question6x5" = List<Interval<Decimal>>{Interval[ 1.50000001,1.6], Interval[ 1.60000001,1.7], Interval[ 1.70000001,1.8], Interval[ 1.80000001,1.9], Interval[ 1.90000001,2], Interval[ 2.00000001,2.1], Interval[ 2.10000001,2.2], Interval[ 2.20000001,2.3], Interval[ 2.30000001,2.4], Interval[ 2.40000001,2.5], Interval[ 2.50000001,2.6], Interval[ 2.60000001,2.7], Interval[ 2.70000001,2.8], Interval[ 2.80000001,2.9], Interval[ 2.90000001,3], Interval[ 3.00000001,3.1], Interval[ 3.10000001,3.2], Interval[ 3.20000001,3.3], Interval[ 3.30000001,3.4], Interval[ 3.40000001,3.5], Interval[ 3.50000001,3.6], Interval[ 3.60000001,3.7], Interval[ 3.70000001,3.8], Interval[ 3.80000001,3.9], Interval[ 3.90000001,4], Interval[ 4.00000001,4.1], Interval[ 4.10000001,4.2], Interval[ 4.20000001,4.3], Interval[ 4.30000001,4.4], Interval[ 4.40000001,4.5], Interval[ 4.50000001,4.6], Interval[ 4.60000001,4.7], Interval[ 4.70000001,4.8], Interval[ 4.80000001,4.9], Interval[ 4.90000001,5], Interval[ 5.00000001,5.1], Interval[ 5.10000001,5.2], Interval[ 5.20000001,5.3], Interval[ 5.30000001,5.4]}, 'Question6x5', toString(List<Interval<Decimal>>{}), toString("Question6x5"))
+
+define test_Question6x6:
+  TestMessage("Question6x6" = List<Interval<Decimal>>{Interval[ 1.55000001,1.65], Interval[ 1.65000001,1.75], Interval[ 1.75000001,1.85], Interval[ 1.85000001,1.95], Interval[ 1.95000001,2.05], Interval[ 2.05000001,2.15], Interval[ 2.15000001,2.25], Interval[ 2.25000001,2.35], Interval[ 2.35000001,2.45], Interval[ 2.45000001,2.55], Interval[ 2.55000001,2.65], Interval[ 2.65000001,2.75], Interval[ 2.75000001,2.85], Interval[ 2.85000001,2.95], Interval[ 2.95000001,3.05], Interval[ 3.05000001,3.15], Interval[ 3.15000001,3.25], Interval[ 3.25000001,3.35], Interval[ 3.35000001,3.45], Interval[ 3.45000001,3.55], Interval[ 3.55000001,3.65], Interval[ 3.65000001,3.75], Interval[ 3.75000001,3.85], Interval[ 3.85000001,3.95], Interval[ 3.95000001,4.05], Interval[ 4.05000001,4.15], Interval[ 4.15000001,4.25], Interval[ 4.25000001,4.35], Interval[ 4.35000001,4.45], Interval[ 4.45000001,4.55], Interval[ 4.55000001,4.65], Interval[ 4.65000001,4.75], Interval[ 4.75000001,4.85], Interval[ 4.85000001,4.95], Interval[ 4.95000001,5.05], Interval[ 5.05000001,5.15], Interval[ 5.15000001,5.25], Interval[ 5.25000001,5.35], Interval[ 5.35000001,5.45]}, 'Question6x6', toString(List<Interval<Decimal>>{}), toString("Question6x6"))
+
+define test_Question7x:
+  TestMessage("Question7x" = List<Interval<Date>>{Interval[@2018-01-01,@2018-01-01], Interval[@2018-01-02,@2018-01-02], Interval[@2018-01-03,@2018-01-03], Interval[@2018-01-04,@2018-01-04], Interval[@2018-01-05,@2018-01-05]}, 'Question7x', toString(List<Interval<Date>>{}), toString("Question7x"))
+
+// Failed, double check formatting before pushing
+define test_Question8x:
+  TestMessage("Question8x" = List<Interval<DateTime>>{Interval[@2018-01-01T12:00:00,@2018-01-01T12:00:00], Interval[@2018-02-01T12:00:00,@2018-02-01T12:00:00], Interval[@2018-03-01T12:00:00,@2018-03-01T12:00:00], Interval[@2018-04-01T12:00:00,@2018-04-01T12:00:00], Interval[@2018-05-01T12:00:00,@2018-05-01T12:00:00]}, 'Question8x', toString(List<Interval<DateTime>>{}), toString("Question8x"))
+
+define test_Question9x:
+  TestMessage("Question9xA" = List<Interval<Date>>{Interval[@2018-01-01,@2018-01-01], Interval[@2018-01-02,@2018-01-02], Interval[@2018-01-03,@2018-01-03], Interval[@2018-01-04,@2018-01-04], Interval[@2018-01-05,@2018-01-05], Interval[@2018-01-06,@2018-01-06], Interval[@2018-01-07,@2018-01-07], Interval[@2018-01-08,@2018-01-08], Interval[@2018-01-09,@2018-01-09], Interval[@2018-01-10,@2018-01-10], Interval[@2018-01-11,@2018-01-11], Interval[@2018-01-12,@2018-01-12], Interval[@2018-01-13,@2018-01-13], Interval[@2018-01-14,@2018-01-14], Interval[@2018-01-15,@2018-01-15], Interval[@2018-01-16,@2018-01-16], Interval[@2018-01-17,@2018-01-17], Interval[@2018-01-18,@2018-01-18], Interval[@2018-01-19,@2018-01-19], Interval[@2018-01-20,@2018-01-20], Interval[@2018-01-21,@2018-01-21], Interval[@2018-01-22,@2018-01-22], Interval[@2018-01-23,@2018-01-23], Interval[@2018-01-24,@2018-01-24], Interval[@2018-01-25,@2018-01-25], Interval[@2018-01-26,@2018-01-26], Interval[@2018-01-27,@2018-01-27], Interval[@2018-01-28,@2018-01-28], Interval[@2018-01-29,@2018-01-29], Interval[@2018-01-30,@2018-01-30], Interval[@2018-01-31, @2018-01-31]}, 'Question9xA', toString(List<Interval<Date>>{}), toString("Question9xA"))
