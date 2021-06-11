@@ -24,6 +24,6 @@ public class IsEvaluator extends org.cqframework.cql.elm.execution.Is {
     Object operand = getOperand().evaluate(context);
     Class<?> type = resolveType(context);
 
-    return context.is(operand, type);
+    return context.is(operand, getOperand().getResultTypeName().getNamespaceURI(), type);
   }
 }

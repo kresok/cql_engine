@@ -36,6 +36,6 @@ public class AsEvaluator extends org.cqframework.cql.elm.execution.As {
     protected Object internalEvaluate(Context context) {
         Object operand = getOperand().evaluate(context);
         Class<?> clazz = resolveType(context);
-        return context.as(operand, clazz, isStrict());
+        return context.as(operand, getOperand().getResultTypeName().getNamespaceURI(), clazz, isStrict());
     }
 }

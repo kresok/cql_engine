@@ -2,9 +2,9 @@ package org.opencds.cqf.cql.engine.model;
 
 
 public interface ModelResolver {
-    String getPackageName();
+    // String getPackageName();
 
-    void setPackageName(String packageName);
+    // void setPackageName(String packageName);
 
     // Expected to return null whenever a path doesn't exist on the target.
     Object resolvePath(Object target, String path);

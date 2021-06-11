@@ -411,12 +411,12 @@ public class Context {
         }
     }
 
-    public Class<?> resolveType(Object value) {
+    public Class<?> resolveType(String namespace, Object value) {
         if (value == null) {
             return null;
         }
 
-        String packageName = value.getClass().getPackage().getName();
+        // String packageName = value.getClass().getPackage().getName();
 
         // May not be necessary, idea is to sync with the use of List.class for ListTypeSpecifiers in the resolveType above
         if (value instanceof Iterable) {
@@ -429,9 +429,9 @@ public class Context {
 
         // Primitives should just use the type
         // BTR: Well, we should probably be explicit about all and only the types we expect
-        if (packageName.startsWith("java")) {
-            return value.getClass();
-        }
+        // if (packageName.startsWith("java")) {
+        //     return value.getClass();
+        // }
 
         DataProvider dataProvider = resolveDataProvider(value.getClass().getPackage().getName());
         return dataProvider.resolveType(value);
@@ -446,7 +446,7 @@ public class Context {
         }
     }
 
-    public Boolean is(Object operand, Class<?> type) {
+    public Boolean is(Object operand, String namespaceUri, Class<?> type) {
         if (operand == null) {
             return null;
         }
@@ -455,7 +455,7 @@ public class Context {
             return true;
         }
 
-        DataProvider provider = resolveDataProvider(type.getPackage().getName(), false);
+        DataProvider provider = resolveDataProvider(namespaceUri);
         if (provider != null) {
             return provider.is(operand, type);
         }
@@ -463,7 +463,7 @@ public class Context {
         return false;
     }
 
-    public Object as(Object operand, Class<?> type, boolean isStrict) {
+    public Object as(Object operand, String namespaceUri, Class<?> type, boolean isStrict) {
         if (operand == null) {
             return null;
         }
@@ -472,7 +472,7 @@ public class Context {
             return operand;
         }
 
-        DataProvider provider = resolveDataProvider(type.getPackage().getName(), false);
+        DataProvider provider = resolveDataProvider(namespaceUri);
         if (provider != null) {
             return provider.as(operand, type, isStrict);
         }
@@ -493,7 +493,7 @@ public class Context {
                 OperandDef operandDef = operandIterator.next();
                 Object argument = argumentIterator.next();
                 // TODO: This is actually wrong, but to fix this would require preserving type information in the ELM....
-                isMatch = isType(resolveType(argument), resolveOperandType(operandDef));
+                isMatch = isType(resolveType(operandDef.getOperandType().getNamespaceURI(), argument.getClass()), resolveOperandType(operandDef));
             }
             else {
                 isMatch = false;
@@ -635,7 +635,7 @@ public class Context {
 
     public void registerDataProvider(String modelUri, DataProvider dataProvider) {
         dataProviders.put(modelUri, dataProvider);
-        packageMap.put(dataProvider.getPackageName(), dataProvider);
+        // packageMap.put(dataProvider.getPackageName(), dataProvider);
     }
 
     public DataProvider resolveDataProvider(QName dataType) {
@@ -648,32 +648,41 @@ public class Context {
         return dataProvider;
     }
 
-    public DataProvider resolveDataProvider(String packageName) {
-        return resolveDataProvider(packageName, true);
-    }
-
-    public DataProvider resolveDataProvider(String packageName, boolean mustResolve) {
-        DataProvider dataProvider = packageMap.get(packageName);
+    public DataProvider resolveDataProvider(String namespaceUri) {
+        DataProvider dataProvider = dataProviders.get(namespaceUri);
         if (dataProvider == null) {
-            if (packageName.startsWith("ca.uhn.fhir.model.dstu2") || packageName.equals("ca.uhn.fhir.model.primitive"))
-            {
-                for (DataProvider provider : dataProviders.values()) {
-                    if (provider.getPackageName().startsWith("ca.uhn.fhir.model.dstu2")
-                            || provider.getPackageName().equals("ca.uhn.fhir.model.primitive"))
-                    {
-                        provider.setPackageName(packageName);
-                        return provider;
-                    }
-                }
-            }
-
-            if (mustResolve) {
-                throw new CqlException(String.format("Could not resolve data provider for package '%s'.", packageName));
-            }
+            throw new CqlException(String.format("Could not resolve data provider for model '%s'.", namespaceUri));
         }
 
         return dataProvider;
     }
+
+    // public DataProvider resolveDataProvider(String packageName) {
+    //     return resolveDataProvider(packageName, true);
+    // }
+
+    // public DataProvider resolveDataProvider(String packageName, boolean mustResolve) {
+    //     DataProvider dataProvider = packageMap.get(packageName);
+    //     if (dataProvider == null) {
+    //         if (packageName.startsWith("ca.uhn.fhir.model.dstu2") || packageName.equals("ca.uhn.fhir.model.primitive"))
+    //         {
+    //             for (DataProvider provider : dataProviders.values()) {
+    //                 if (provider.getPackageName().startsWith("ca.uhn.fhir.model.dstu2")
+    //                         || provider.getPackageName().equals("ca.uhn.fhir.model.primitive"))
+    //                 {
+    //                     provider.setPackageName(packageName);
+    //                     return provider;
+    //                 }
+    //             }
+    //         }
+
+    //         if (mustResolve) {
+    //             throw new CqlException(String.format("Could not resolve data provider for package '%s'.", packageName));
+    //         }
+    //     }
+
+    //     return dataProvider;
+    // }
 
     private TerminologyProvider terminologyProvider;
     public void registerTerminologyProvider(TerminologyProvider tp) {

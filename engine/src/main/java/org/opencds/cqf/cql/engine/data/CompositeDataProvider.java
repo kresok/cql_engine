@@ -15,16 +15,16 @@ public class CompositeDataProvider implements DataProvider {
         this.retrieveProvider = retrieveProvider;
     }
 
-    @Override
-    public String getPackageName() {
-        return this.modelResolver.getPackageName();
-    }
+    // @Override
+    // public String getPackageName() {
+    //     return this.modelResolver.getPackageName();
+    // }
 
-    @Override
-    public void setPackageName(String packageName) {
-        this.modelResolver.setPackageName(packageName);
+    // @Override
+    // public void setPackageName(String packageName) {
+    //     this.modelResolver.setPackageName(packageName);
 
-    }
+    // }
 
     @Override
     public Object resolvePath(Object target, String path) {

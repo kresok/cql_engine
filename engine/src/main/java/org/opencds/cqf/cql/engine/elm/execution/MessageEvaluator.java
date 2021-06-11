@@ -14,7 +14,7 @@ public class MessageEvaluator extends org.cqframework.cql.elm.execution.Message 
 
     static final Logger logger = LoggerFactory.getLogger(MessageEvaluator.class);
 
-    public Object message(Context context, SourceLocator sourceLocator, Object source, Boolean condition, String code, String severity, String message) {
+    public Object message(Context context, SourceLocator sourceLocator, String namespaceUri, Object source, Boolean condition, String code, String severity, String message) {
         if (severity == null) {
             severity = "message";
         }
@@ -36,12 +36,12 @@ public class MessageEvaluator extends org.cqframework.cql.elm.execution.Message 
                     logger.warn(finalMessage); break;
                 }
                 case "trace": {
-                    String finalMessage = messageBuilder.append(message).append(String.format("%n%s", stripPHI(context, source))).toString();
+                    String finalMessage = messageBuilder.append(message).append(String.format("%n%s", stripPHI(context, namespaceUri, source))).toString();
                     context.logDebugTrace(sourceLocator, finalMessage);
                     logger.debug(finalMessage); break;
                 }
                 case "error": {
-                    String finalMessage = messageBuilder.append(message).append(String.format("%n%s", stripPHI(context, source))).toString();
+                    String finalMessage = messageBuilder.append(message).append(String.format("%n%s", stripPHI(context, namespaceUri, source))).toString();
                     // NOTE: debug logging happens through exception-handling
                     logger.error(finalMessage);
                     throw new CqlException(finalMessage);
@@ -51,8 +51,8 @@ public class MessageEvaluator extends org.cqframework.cql.elm.execution.Message 
         return source;
     }
 
-    private String stripPHI(Context context, Object source) {
-        Optional<DataProvider> dataProvider = Optional.ofNullable(context.resolveDataProvider(source.getClass().getPackage().getName(), false));
+    private String stripPHI(Context context, String namespaceUri, Object source) {
+        Optional<DataProvider> dataProvider = Optional.ofNullable(context.resolveDataProvider(namespaceUri));
 
         return dataProvider.map(DataProvider::phiObfuscationSupplier).map(Supplier::get)
                 .map(obfuscator -> obfuscator.obfuscate(source))
@@ -67,7 +67,7 @@ public class MessageEvaluator extends org.cqframework.cql.elm.execution.Message 
         String severity = (String) getSeverity().evaluate(context);
         String message = (String) getMessage().evaluate(context);
 
-        return message(context, SourceLocator.fromNode(this, context.getCurrentLibrary()),
+        return message(context, SourceLocator.fromNode(this, context.getCurrentLibrary()), getSource().getResultTypeName().getNamespaceURI(),
                 source, condition, code, severity, message
         );
     }

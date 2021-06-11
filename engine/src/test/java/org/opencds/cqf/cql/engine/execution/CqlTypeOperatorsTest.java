@@ -37,7 +37,7 @@ public class CqlTypeOperatorsTest extends CqlExecutionTestBase {
         Assert.assertTrue(EquivalentEvaluator.equivalent(result, new DateTime(null, 2014, 1, 1)));
 
         try {
-            result = context.as(1, Tuple.class, true);
+            result = context.as(1, "urn:hl7-org:elm-types:r1",  Tuple.class, true);
             Assert.fail();
         }
         catch (InvalidCast e) {

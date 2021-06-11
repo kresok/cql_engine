@@ -29,15 +29,15 @@ public class SystemDataProvider extends BaseModelResolver implements DataProvide
 	// 	return false;
 	// }
 
-	@Override
+	// @Override
     public String getPackageName() {
         return "org.opencds.cqf.cql.engine.runtime";
     }
 
-    @Override
-    public void setPackageName(String packageName) {
+    // @Override
+    // public void setPackageName(String packageName) {
 
-    }
+    // }
 
     private Field getProperty(Class<?> clazz, String path) {
         try {
@@ -96,7 +96,7 @@ public class SystemDataProvider extends BaseModelResolver implements DataProvide
         if (accessor == null) {
             return null;
         }
-        
+
         try {
             return accessor.invoke(target);
         } catch (InvocationTargetException e) {
@@ -159,7 +159,7 @@ public class SystemDataProvider extends BaseModelResolver implements DataProvide
         try {
             Object object = clazz.getDeclaredConstructor().newInstance();
             return object;
-        } catch (InstantiationException | InvocationTargetException | 
+        } catch (InstantiationException | InvocationTargetException |
             ExceptionInInitializerError | IllegalAccessException | SecurityException | NoSuchMethodException e) {
             throw new IllegalArgumentException(String.format("Could not create an instance of class %s.", clazz.getName()));
         }
